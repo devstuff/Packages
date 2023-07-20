@@ -197,6 +197,17 @@ contexts:
       set: markdown
 
   frontmatter:
+    - match: (---)\s*(?i:(jsonnet)\s*)\n
+      captures:
+        0: meta.frontmatter.markdown
+        1: punctuation.section.block.begin.frontmatter.markdown
+        2: constant.other.language-name.markdown
+      embed: scope:source.jsonnet
+      embed_scope: meta.frontmatter.markdown source.jsonnet.embedded.markdown
+      escape: ^(---|\.{3})\s*\n # pandoc requires the remainder of the line to be blank
+      escape_captures:
+        0: meta.frontmatter.markdown
+        1: punctuation.section.block.end.frontmatter.markdown
     - match: (---)\s*(?i:(json)\s*)\n
       captures:
         0: meta.frontmatter.markdown
@@ -1185,16 +1196,22 @@ contexts:
     - include: fenced-clojure
     - include: fenced-c
     - include: fenced-cpp
+    - include: fenced-crontab
+    - include: fenced-css
     - include: fenced-csharp
     - include: fenced-diff
+    - include: fenced-dockerfile
     - include: fenced-erlang
     - include: fenced-graphviz
     - include: fenced-golang
     - include: fenced-haskell
     - include: fenced-html-php
     - include: fenced-html
+    - include: fenced-ini
     - include: fenced-java
+    - include: fenced-java-props
     - include: fenced-javascript
+    - include: fenced-jsonnet
     - include: fenced-jsonc
     - include: fenced-jspx
     - include: fenced-jsx
@@ -1270,6 +1287,41 @@ contexts:
         0: meta.code-fence.definition.end.c++.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
+  # https://github.com/michaelblyons/SublimeSyntax-Crontab
+  fenced-crontab:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:cron|crontab))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.crontab.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.crontab
+      embed_scope: markup.raw.code-fence.crontab.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.crontab.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  fenced-css:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:css))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.css.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.css
+      embed_scope: markup.raw.code-fence.css.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.css.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
   fenced-csharp:
     - match: |-
          (?x)
@@ -1302,6 +1354,24 @@ contexts:
       escape: '{{code_fence_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.diff.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  # Dockerfile, https://github.com/asbjornenge/Docker.tmbundle
+  fenced-dockerfile:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:dockerfile|docker))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.dockerfile.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.dockerfile
+      embed_scope: markup.raw.code-fence.dockerfile.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.dockerfile.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-erlang:
@@ -1406,6 +1476,24 @@ contexts:
         0: meta.code-fence.definition.end.html.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
+  # .ini file syntax, https://github.com/sindresorhus/editorconfig-sublime
+  fenced-ini:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:ini))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.ini.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.ini
+      embed_scope: markup.raw.code-fence.ini.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.ini.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
   fenced-java:
     - match: |-
          (?x)
@@ -1423,6 +1511,23 @@ contexts:
         0: meta.code-fence.definition.end.java.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
+  fenced-java-props:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:java-props|properties))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.java-props.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.java-props
+      embed_scope: markup.raw.code-fence.java-props.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.java-props.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
   fenced-javascript:
     - match: |-
          (?x)
@@ -1438,6 +1543,23 @@ contexts:
       escape: '{{code_fence_escape}}'
       escape_captures:
         0: meta.code-fence.definition.end.javascript.markdown-gfm
+        1: punctuation.definition.raw.code-fence.end.markdown
+
+  fenced-jsonnet:
+    - match: |-
+         (?x)
+          {{fenced_code_block_start}}
+          ((?i:jsonnet))
+          {{fenced_code_block_trailing_infostring_characters}}
+      captures:
+        0: meta.code-fence.definition.begin.jsonnet.markdown-gfm
+        2: punctuation.definition.raw.code-fence.begin.markdown
+        5: constant.other.language-name.markdown
+      embed: scope:source.jsonnet
+      embed_scope: markup.raw.code-fence.jsonnet.markdown-gfm
+      escape: '{{code_fence_escape}}'
+      escape_captures:
+        0: meta.code-fence.definition.end.jsonnet.markdown-gfm
         1: punctuation.definition.raw.code-fence.end.markdown
 
   fenced-jsonc:

@@ -49,6 +49,12 @@
 			"kind": ["markup", "s", "Syntax"],
 			"details": "Specifies <code>C#</code> code highlighting"
 		},
+    {
+      "trigger": "css",
+      "annotation": "CSS",
+      "kind": ["markup", "s", "Syntax"],
+      "details": "Specifies <code>CSS</code> code highlighting"
+    },
 		{
 			"trigger": "csharp",
 			"annotation": "C#",
@@ -133,6 +139,12 @@
 			"kind": ["markup", "s", "Syntax"],
 			"details": "Specifies <code>JavaScript</code> code highlighting"
 		},
+    {
+      "trigger": "jsonnet",
+      "annotation": "Jsonnet",
+      "kind": ["markup", "s", "Syntax"],
+      "details": "Specifies <code>Jsonnet</code> code highlighting"
+    },
 		{
 			"trigger": "json",
 			"annotation": "JSON",
